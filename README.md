@@ -3,8 +3,8 @@
 # tap-readthedocs
 
 <div>
-  <a href="https://results.pre-commit.ci/latest/github/edgarrmondragon/tap-readthedocs/main">
-    <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/edgarrmondragon/tap-readthedocs/main.svg"/>
+  <a href="https://results.pre-commit.ci/latest/github/reservoir-data/tap-readthedocs/main">
+    <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/reservoir-data/tap-readthedocs/main.svg"/>
   </a>
   <a href="https://github.com/astral-sh/ruff">
     <img alt="Ruff" style="max-width:100%;" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json">
@@ -12,10 +12,10 @@
   <a href="https://github.com/pypa/hatch">
     <img alt="Hatch project" src="https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg"/>
   </a>
-  <a href="https://github.com/edgarrmondragon/tap-readthedocs/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/edgarrmondragon/tap-readthedocs"/>
+  <a href="https://github.com/reservoir-data/tap-readthedocs/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/reservoir-data/tap-readthedocs"/>
   </a>
-  <a href="https://github.com/edgarrmondragon/tap-readthedocs/">
+  <a href="https://github.com/reservoir-data/tap-readthedocs/">
     <img alt="PyPI" src="https://img.shields.io/pypi/pyversions/tap-readthedocs"/>
   </a>
 </div>

@@ -143,7 +143,7 @@ class Builds(ReadTheDocsStream):
                 th.Property("version", th.StringType),
                 th.Property("formats", th.ArrayType(th.StringType)),
                 # TODO(edgarrmondragon): add other configs here (sphinx, etc.)
-                # https://github.com/edgarrmondragon/tap-readthedocs/issues/227
+                # https://github.com/reservoir-data/tap-readthedocs/issues/227
                 th.Property(
                     "python",
                     th.ObjectType(
@@ -197,7 +197,7 @@ class Subprojects(ReadTheDocsStream):
     parent_stream_type = Projects
 
     # TODO(edgarrmondragon): get the complete schema
-    # https://github.com/edgarrmondragon/tap-readthedocs/issues/2
+    # https://github.com/reservoir-data/tap-readthedocs/issues/2
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
     ).to_dict()
@@ -212,7 +212,7 @@ class Translations(ReadTheDocsStream):
     parent_stream_type = Projects
 
     # TODO(edgarrmondragon): get the complete schema
-    # https://github.com/edgarrmondragon/tap-readthedocs/issues/2
+    # https://github.com/reservoir-data/tap-readthedocs/issues/2
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
     ).to_dict()
@@ -227,14 +227,14 @@ class Redirects(ReadTheDocsStream):
     parent_stream_type = Projects
 
     # TODO(edgarrmondragon): get the complete schema
-    # https://github.com/edgarrmondragon/tap-readthedocs/issues/2
+    # https://github.com/reservoir-data/tap-readthedocs/issues/2
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
         # TODO(edgarrmondragon): Inform max length of 255
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property("redirect_type", th.StringType),
         # TODO(edgarrmondragon): Inform max length of 255
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property(
             "from_url",
             th.StringType,
@@ -242,7 +242,7 @@ class Redirects(ReadTheDocsStream):
             examples=["/docs/", "/install.html"],
         ),
         # TODO(edgarrmondragon): Inform max length of 255
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property(
             "to_url",
             th.StringType,
@@ -255,7 +255,7 @@ class Redirects(ReadTheDocsStream):
             description="Apply the redirect even if the page exists",
         ),
         # TODO(edgarrmondragon): Inform "small" integer
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property(
             "http_status",
             th.IntegerType,
@@ -263,10 +263,10 @@ class Redirects(ReadTheDocsStream):
         ),
         th.Property("enabled", th.BooleanType),
         # TODO(edgarrmondragon): Inform max length of 255
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property("description", th.StringType),
         # TODO(edgarrmondragon): Inform positive integer
-        # https://github.com/edgarrmondragon/tap-readthedocs/issues/295
+        # https://github.com/reservoir-data/tap-readthedocs/issues/295
         th.Property(
             "position",
             th.IntegerType,

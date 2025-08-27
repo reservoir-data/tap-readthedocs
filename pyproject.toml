@@ -39,9 +39,9 @@ dependencies = [
   "singer-sdk~=0.48.0",
   "toolz~=1.0.0",
 ]
-urls.Documentation = "https://github.com/edgarrmondragon/tap-readthedocs#readme"
-urls.Homepage = "https://github.com/edgarrmondragon/tap-readthedocs"
-urls.Repository = "https://github.com/edgarrmondragon/tap-readthedocs"
+urls.Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
+urls.Homepage = "https://github.com/reservoir-data/tap-readthedocs"
+urls.Repository = "https://github.com/reservoir-data/tap-readthedocs"
 scripts."tap-readthedocs" = "tap_readthedocs.tap:TapReadTheDocs.cli"
 
 [dependency-groups]
