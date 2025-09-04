@@ -34,13 +34,15 @@ class Projects(ReadTheDocsStream):
             th.ObjectType(
                 th.Property("code", th.StringType),
                 th.Property("name", th.StringType),
+                additional_properties=True,
             ),
         ),
         th.Property(
             "programming_language",
             th.ObjectType(
-                th.Property("url", th.StringType),
-                th.Property("type", th.StringType),
+                th.Property("code", th.StringType),
+                th.Property("name", th.StringType),
+                additional_properties=True,
             ),
         ),
         th.Property(
@@ -48,13 +50,24 @@ class Projects(ReadTheDocsStream):
             th.ObjectType(
                 th.Property("url", th.StringType),
                 th.Property("type", th.StringType),
+                additional_properties=True,
             ),
         ),
         th.Property("default_version", th.StringType),
         th.Property("default_branch", th.StringType),
         th.Property("subproject_of", th.IntegerType),
         th.Property("translation_of", th.IntegerType),
-        th.Property("urls", th.ObjectType()),
+        th.Property(
+            "urls",
+            th.ObjectType(
+                th.Property("documentation", th.StringType),
+                th.Property("home", th.StringType),
+                th.Property("builds", th.StringType),
+                th.Property("versions", th.StringType),
+                th.Property("downloads", th.StringType),
+                additional_properties=True,
+            ),
+        ),
         th.Property("tags", th.ArrayType(th.StringType)),
         th.Property(
             "users",
@@ -66,6 +79,10 @@ class Projects(ReadTheDocsStream):
         ),
         th.Property("active_versions", th.ObjectType()),
         th.Property("homepage", th.StringType),
+        th.Property("external_builds_privacy_level", th.StringType),
+        th.Property("privacy_level", th.StringType),
+        th.Property("single_version", th.BooleanType),
+        th.Property("versioning_scheme", th.StringType),
     ).to_dict()
 
     def get_child_context(
