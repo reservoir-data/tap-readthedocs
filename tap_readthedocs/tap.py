@@ -2,14 +2,20 @@
 
 from __future__ import annotations
 
-import typing as t
+import sys
+from typing import TYPE_CHECKING
 
 from singer_sdk import Tap
 from singer_sdk import typing as th
 
 from tap_readthedocs import streams
 
-if t.TYPE_CHECKING:
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+if TYPE_CHECKING:
     from tap_readthedocs.client import ReadTheDocsStream
 
 
@@ -31,12 +37,8 @@ class TapReadTheDocs(Tap):
         ),
     ).to_dict()
 
+    @override
     def discover_streams(self) -> list[ReadTheDocsStream]:
-        """Return a list of discovered streams.
-
-        Returns:
-            A list of ReadTheDocs streams.
-        """
         result = [
             streams.Builds(tap=self),
             streams.Projects(tap=self),
