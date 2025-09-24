@@ -36,8 +36,9 @@ dynamic = [
 ]
 dependencies = [
   "requests-cache~=1.0",
-  "singer-sdk~=0.48.0",
+  "singer-sdk~=0.49.0",
   "toolz~=1.0.0",
+  "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
 urls.Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
 urls.Homepage = "https://github.com/reservoir-data/tap-readthedocs"
@@ -51,7 +52,7 @@ dev = [
 ]
 testing = [
   "deptry>=0.12",
-  "pytest>=7.4",
+  "pytest>=8",
   "singer-sdk[testing]",
 ]
 typing = [

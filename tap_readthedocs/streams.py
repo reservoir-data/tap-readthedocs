@@ -3,14 +3,20 @@
 from __future__ import annotations
 
 import logging
-import typing as t
+import sys
+from typing import TYPE_CHECKING, Any
 
 from singer_sdk import typing as th
 from toolz.dicttoolz import update_in
 
 from tap_readthedocs.client import ReadTheDocsStream
 
-if t.TYPE_CHECKING:
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+if TYPE_CHECKING:
     from singer_sdk.helpers.types import Context
 
 logger = logging.getLogger(__name__)
@@ -86,20 +92,12 @@ class Projects(ReadTheDocsStream):
         th.Property("_links", th.ObjectType(additional_properties=True)),
     ).to_dict()
 
+    @override
     def get_child_context(
         self,
-        record: dict[str, t.Any],
-        context: Context | None,  # noqa: ARG002
-    ) -> dict[str, t.Any] | None:
-        """Get child context for a project.
-
-        Args:
-            record: Project record.
-            context: Stream sync context.
-
-        Returns:
-            Dictionary of a project context.
-        """
+        record: dict[str, Any],
+        context: Context | None,
+    ) -> dict[str, Any] | None:
         return {"project_slug": record["slug"]}
 
 
@@ -187,20 +185,12 @@ class Builds(ReadTheDocsStream):
         ),
     ).to_dict()
 
+    @override
     def post_process(
         self,
-        row: dict[str, t.Any],
-        context: Context | None = None,  # noqa: ARG002
-    ) -> dict[str, t.Any] | None:
-        """Modify build record.
-
-        Args:
-            row: Build record.
-            context: Stream sync context.
-
-        Returns:
-            Modified record dictionary.
-        """
+        row: dict[str, Any],
+        context: Context | None = None,
+    ) -> dict[str, Any] | None:
         if row["config"]:
             row = update_in(row, ["config", "python", "version"], str, "")
         return row
