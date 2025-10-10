@@ -163,7 +163,7 @@ warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
 module = [
-  "toolz.*",  # https://github.com/pytoolz/toolz/issues/496
+  "toolz.*", # https://github.com/pytoolz/toolz/issues/496
 ]
 ignore_missing_imports = true
 
