@@ -962,7 +962,7 @@ typing = [
 requires-dist = [
     { name = "requests-cache", specifier = "~=1.0" },
     { name = "singer-sdk", specifier = "~=0.50.0" },
-    { name = "toolz", specifier = "~=1.0.0" },
+    { name = "toolz", specifier = "~=1.1.0" },
     { name = "typing-extensions", marker = "python_full_version < '3.12'", specifier = ">=4.15" },
 ]
 
@@ -1035,11 +1035,11 @@ wheels = [
 
 [[package]]
 name = "toolz"
-version = "1.0.1a0"
+version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/47/ba/73cd87e4a5079e092b3cafda0458138cfeb2ab955b751643066d04fb9d5a/toolz-1.0.1a0.tar.gz", hash = "sha256:c2ef5d1c2e8abdc1d3e5f591f0d48482c503474b2b5bb3d553878964dbb8f999", size = 52636, upload-time = "2025-10-17T03:12:35.124Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/11/d6/114b492226588d6ff54579d95847662fc69196bdeec318eb45393b24c192/toolz-1.1.0.tar.gz", hash = "sha256:27a5c770d068c110d9ed9323f24f1543e83b2f300a687b7891c1a6d56b697b5b", size = 52613, upload-time = "2025-10-17T04:03:21.661Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bb/7b/410d19864563d37f9a1ee0a852b8828598ab55b29b5032d04717948a4784/toolz-1.0.1a0-py3-none-any.whl", hash = "sha256:065690721633f56cef5b01e09bf31b215be6f1c628334dad9d752f097c03ad0f", size = 57972, upload-time = "2025-10-17T03:12:33.418Z" },
+    { url = "https://files.pythonhosted.org/packages/fb/12/5911ae3eeec47800503a238d971e51722ccea5feb8569b735184d5fcdbc0/toolz-1.1.0-py3-none-any.whl", hash = "sha256:15ccc861ac51c53696de0a5d6d4607f99c210739caf987b5d2054f3efed429d8", size = 58093, upload-time = "2025-10-17T04:03:20.435Z" },
 ]
 
 [[package]]

@@ -37,7 +37,7 @@ dynamic = [
 dependencies = [
   "requests-cache~=1.0",
   "singer-sdk~=0.50.0",
-  "toolz~=1.0.0",
+  "toolz~=1.1.0",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
 urls.Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
