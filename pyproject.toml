@@ -36,7 +36,7 @@ dynamic = [
 ]
 dependencies = [
   "requests-cache~=1.0",
-  "singer-sdk~=0.51.0",
+  "singer-sdk~=0.52.2",
   "toolz~=1.1.0",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
