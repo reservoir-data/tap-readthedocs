@@ -2,19 +2,13 @@
 
 from __future__ import annotations
 
-import sys
 from http import HTTPStatus
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar, override
 
 import requests_cache
 from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.pagination import BaseOffsetPaginator
 from singer_sdk.streams import RESTStream
-
-if sys.version_info >= (3, 12):
-    from typing import override
-else:
-    from typing_extensions import override
 
 if TYPE_CHECKING:
     from singer_sdk.helpers.types import Context
