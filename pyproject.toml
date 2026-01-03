@@ -54,6 +54,7 @@ testing = [
 ]
 typing = [
   "mypy",
+  "ty>=0.0.8",
   "types-requests",
 ]
 
@@ -104,8 +105,13 @@ types-requests = "requests"
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
-[tool.pytest.ini_options]
-addopts = "-vvv"
+[tool.pytest]
+addopts = [
+  "-vvv",
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+]
 filterwarnings = [
   "error",
   "default:Fields in transformed catalog but not in records:UserWarning",
@@ -117,9 +123,11 @@ filterwarnings = [
   "default:No records were available to test:UserWarning",
   # Deprecation message introduced in Python 3.14. Upstream issue: https://github.com/python-attrs/cattrs/issues/635
   "default:'_UnionGenericAlias' is deprecated and slated for removal in Python 3.17:DeprecationWarning",
-  # Deprecation message introduced in Python 3.14. Upstream PR: https://github.com/litl/backoff/pull/220
-  "default:'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16:DeprecationWarning",
 ]
+log_level = "INFO"
+minversion = "9"
+testpaths = [ "tests" ]
+xfail_strict = true
 
 [tool.tox]
 min_version = "4.22"
@@ -147,7 +155,10 @@ commands = [ [ "tap-readthedocs", { replace = "posargs", default = [ "--config=E
 
 [tool.tox.env.typing]
 dependency_groups = [ "testing", "typing" ]
-commands = [ [ "mypy", "--strict", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ] ]
+commands = [
+  [ "mypy", "--strict", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
+  [ "ty", "check", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
+]
 
 [tool.mypy]
 enable_error_code = [
@@ -155,6 +166,7 @@ enable_error_code = [
   "redundant-expr",
   "truthy-bool",
 ]
+strict = true
 warn_redundant_casts = true
 warn_unreachable = true
 warn_unused_configs = true
