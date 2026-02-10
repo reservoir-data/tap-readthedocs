@@ -83,6 +83,7 @@ class Projects(ReadTheDocsStream):
         th.Property("privacy_level", th.StringType),
         th.Property("single_version", th.BooleanType),
         th.Property("versioning_scheme", th.StringType),
+        th.Property("readthedocs_yaml_path", th.StringType),
         th.Property("_links", th.ObjectType(additional_properties=True)),
     ).to_dict()
 
