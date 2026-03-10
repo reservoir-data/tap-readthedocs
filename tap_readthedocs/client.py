@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, override
 
 import requests_cache
 from singer_sdk.authenticators import APIKeyAuthenticator
-from singer_sdk.pagination import BaseOffsetPaginator
+from singer_sdk.pagination import OffsetPaginator
 from singer_sdk.streams import RESTStream
 
 if TYPE_CHECKING:
@@ -47,5 +47,5 @@ class ReadTheDocsStream(RESTStream[int]):
         }
 
     @override
-    def get_new_paginator(self) -> BaseOffsetPaginator:
-        return BaseOffsetPaginator(start_value=0, page_size=self.page_size)
+    def get_new_paginator(self) -> OffsetPaginator:
+        return OffsetPaginator(start_value=0, page_size=self.page_size)
