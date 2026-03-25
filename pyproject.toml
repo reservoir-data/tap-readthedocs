@@ -16,7 +16,6 @@ keywords = [
   "singer.io",
 ]
 license = "Apache-2.0"
-license-files = [ "LICENSE" ]
 requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
@@ -40,11 +39,11 @@ email = "edgarrm358@gmail.com"
 name = "Edgar Ramírez-Mondragón"
 email = "edgarrm358@gmail.com"
 [project.scripts]
-"tap-readthedocs" = "tap_readthedocs.tap:TapReadTheDocs.cli"
+tap-readthedocs = "tap_readthedocs.tap:TapReadTheDocs.cli"
 [project.urls]
 Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
 Homepage = "https://github.com/reservoir-data/tap-readthedocs"
-Repository = "https://github.com/reservoir-data/tap-readthedocs"
+Source = "https://github.com/reservoir-data/tap-readthedocs"
 
 [dependency-groups]
 dev = [
@@ -53,12 +52,13 @@ dev = [
 ]
 testing = [
   "deptry>=0.12",
-  "pytest>=8",
+  "pytest>=9",
   "singer-sdk[testing]",
 ]
 typing = [
   "mypy",
-  "ty>=0.0.8",
+  "toolz-stubs>=0.4",
+  "ty>=0.0.23",
   "types-requests",
 ]
 
@@ -112,6 +112,18 @@ types-requests = "requests"
 [tool.pyproject-fmt]
 table_format = "long"
 
+[tool.mypy]
+enable_error_code = [
+  "ignore-without-code",
+  "redundant-expr",
+  "truthy-bool",
+]
+strict = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
 [tool.pytest]
 addopts = [
   "-v",
@@ -126,30 +138,32 @@ filterwarnings = [
   "default:No records returned in stream 'translations:UserWarning",
   "default:No records returned in stream 'versions:UserWarning",
   "default:No records were available to test:UserWarning",
-  # Deprecation message introduced in Python 3.14. Upstream issue: https://github.com/python-attrs/cattrs/issues/635
-  "default:'_UnionGenericAlias' is deprecated and slated for removal in Python 3.17:DeprecationWarning",
 ]
 log_level = "INFO"
 minversion = "9"
-testpaths = [ "tests" ]
 strict = true
+testpaths = [ "tests" ]
 
 [tool.tox]
-min_version = "4.22"
-requires = [ "tox", "tox-uv" ]
+requires = [ "tox>=4.43", "tox-uv" ]
 env_list = [
   "dependencies",
   "typing",
-  "3.14",
-  "3.13",
-  "3.12",
+  "test",
 ]
-[tool.tox.env]
-dependencies.dependency_groups = [ "testing" ]
-dependencies.commands = [ [ "deptry", "." ] ]
-sync.commands = [ [ "tap-readthedocs", { replace = "posargs", default = [ "--config=ENV" ], extend = true } ] ]
-typing.dependency_groups = [ "testing", "typing" ]
-typing.commands = [
+[tool.tox.env.dependencies]
+description = "check for unused, missing and transitive dependencies"
+dependency_groups = [ "testing" ]
+labels = [ "check" ]
+commands = [ [ "deptry", "." ] ]
+[tool.tox.env.test]
+description = "run tests on Python {py_dot_ver}"
+base_python = "3.14"  # TODO: Use .python-version (https://github.com/tox-dev/tox/issues/3894)
+[tool.tox.env.typing]
+description = "type checks"
+dependency_groups = [ "testing", "typing" ]
+labels = [ "check" ]
+commands = [
   [ "mypy", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
   [ "ty", "check", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
 ]
@@ -159,20 +173,3 @@ runner = "uv-venv-lock-runner"
 pass_env = [ "TAP_READTHEDOCS_*" ]
 dependency_groups = [ "testing" ]
 commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
-
-[tool.mypy]
-enable_error_code = [
-  "ignore-without-code",
-  "redundant-expr",
-  "truthy-bool",
-]
-strict = true
-warn_redundant_casts = true
-warn_unreachable = true
-warn_unused_configs = true
-warn_unused_ignores = true
-overrides = [
-  { module = [
-    "toolz.*", # https://github.com/pytoolz/toolz/issues/496
-  ], ignore_missing_imports = true },
-]

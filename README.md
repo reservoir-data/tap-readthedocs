@@ -32,17 +32,17 @@ Singer Tap for [**Read the Docs**](https://docs.readthedocs.io). Built with the 
 
 ## Capabilities
 
-* `catalog`
-* `state`
-* `discover`
-* `about`
-* `stream-maps`
+- `catalog`
+- `state`
+- `discover`
+- `about`
+- `stream-maps`
 
 ## Settings
 
 | Setting| Required | Default | Description |
 |:-------|:--------:|:-------:|:------------|
-| token  | True     | None    |             |
+| token | True | None | |
 | include_business_streams | False | False | Whether to include streams available only to ReadTheDocs for Business accounts |
 
 A full list of supported settings and capabilities is available by running: `tap-readthedocs --about`
@@ -104,13 +104,13 @@ Your project comes with a custom `meltano.yml` project file already created. Go 
    meltano install
    ```
 
-2. Check that the extractor is working properly
+1. Check that the extractor is working properly
 
    ```bash
    meltano invoke tap-readthedocs --version
    ```
 
-3. Execute an ELT pipeline
+1. Execute an ELT pipeline
 
    ```bash
    meltano run tap-readthedocs target-jsonl
