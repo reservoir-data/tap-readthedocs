@@ -738,6 +738,7 @@ dev = [
     { name = "mypy" },
     { name = "pytest" },
     { name = "singer-sdk", extra = ["testing"] },
+    { name = "toolz-stubs" },
     { name = "ty" },
     { name = "types-requests" },
 ]
@@ -748,6 +749,7 @@ testing = [
 ]
 typing = [
     { name = "mypy" },
+    { name = "toolz-stubs" },
     { name = "ty" },
     { name = "types-requests" },
 ]
@@ -763,19 +765,21 @@ requires-dist = [
 dev = [
     { name = "deptry", specifier = ">=0.12" },
     { name = "mypy" },
-    { name = "pytest", specifier = ">=8" },
+    { name = "pytest", specifier = ">=9" },
     { name = "singer-sdk", extras = ["testing"] },
-    { name = "ty", specifier = ">=0.0.8" },
+    { name = "toolz-stubs", specifier = ">=0.4" },
+    { name = "ty", specifier = ">=0.0.23" },
     { name = "types-requests" },
 ]
 testing = [
     { name = "deptry", specifier = ">=0.12" },
-    { name = "pytest", specifier = ">=8" },
+    { name = "pytest", specifier = ">=9" },
     { name = "singer-sdk", extras = ["testing"] },
 ]
 typing = [
     { name = "mypy" },
-    { name = "ty", specifier = ">=0.0.8" },
+    { name = "toolz-stubs", specifier = ">=0.4" },
+    { name = "ty", specifier = ">=0.0.23" },
     { name = "types-requests" },
 ]
 
@@ -831,6 +835,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/11/d6/114b492226588d6ff54579d95847662fc69196bdeec318eb45393b24c192/toolz-1.1.0.tar.gz", hash = "sha256:27a5c770d068c110d9ed9323f24f1543e83b2f300a687b7891c1a6d56b697b5b", size = 52613, upload-time = "2025-10-17T04:03:21.661Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fb/12/5911ae3eeec47800503a238d971e51722ccea5feb8569b735184d5fcdbc0/toolz-1.1.0-py3-none-any.whl", hash = "sha256:15ccc861ac51c53696de0a5d6d4607f99c210739caf987b5d2054f3efed429d8", size = 58093, upload-time = "2025-10-17T04:03:20.435Z" },
+]
+
+[[package]]
+name = "toolz-stubs"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "toolz" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/fd/2c97773a69f6ccca3be1f843ce2151ed9fe4ee9989bb0e9b01b226b83871/toolz_stubs-0.4.0.tar.gz", hash = "sha256:d32a2054cd299905232400bcde934e9012538eff3455c7b13b04befbf4aa73ac", size = 64848, upload-time = "2026-03-11T09:26:05.181Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/4f/c27310714b65079b64b6e1667c7cb7689bfedb54e436b54e2c6f79b0ef6d/toolz_stubs-0.4.0-py3-none-any.whl", hash = "sha256:4eaa97b55a981de6af44b2739c17cc4a102fac32a0284789d77c36b4fa6c6c44", size = 68117, upload-time = "2026-03-11T09:26:03.705Z" },
 ]
 
 [[package]]
