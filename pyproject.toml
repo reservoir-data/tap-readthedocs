@@ -1,6 +1,7 @@
 [build-system]
 build-backend = "hatchling.build"
 requires = [
+  "hatch-pinned-extra==0.2",
   "hatch-vcs==0.5",
   "hatchling==1.29",
 ]
@@ -16,12 +17,6 @@ keywords = [
 ]
 license = "Apache-2.0"
 license-files = [ "LICENSE" ]
-maintainers = [
-  { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" },
-]
-authors = [
-  { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" },
-]
 requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
@@ -30,6 +25,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dynamic = [
+  "optional-dependencies",
   "version",
 ]
 dependencies = [
@@ -37,10 +33,18 @@ dependencies = [
   "singer-sdk~=0.54.0a4",
   "toolz~=1.1.0",
 ]
-urls.Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
-urls.Homepage = "https://github.com/reservoir-data/tap-readthedocs"
-urls.Repository = "https://github.com/reservoir-data/tap-readthedocs"
-scripts."tap-readthedocs" = "tap_readthedocs.tap:TapReadTheDocs.cli"
+[[project.authors]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
+[[project.maintainers]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
+[project.scripts]
+"tap-readthedocs" = "tap_readthedocs.tap:TapReadTheDocs.cli"
+[project.urls]
+Documentation = "https://github.com/reservoir-data/tap-readthedocs#readme"
+Homepage = "https://github.com/reservoir-data/tap-readthedocs"
+Repository = "https://github.com/reservoir-data/tap-readthedocs"
 
 [dependency-groups]
 dev = [
@@ -58,58 +62,60 @@ typing = [
   "types-requests",
 ]
 
-[tool.hatch]
-version.source = "vcs"
+[tool.hatch.metadata.hooks.pinned_extra]
+name = "pinned"
+[tool.hatch.version]
+source = "vcs"
 
 [tool.uv]
-required-version = ">=0.5.19"
+required-version = ">=0.10"
 prerelease = "allow"
 preview = true
 
 [tool.ruff]
 line-length = 88
-lint.select = [
+[tool.ruff.lint]
+select = [
   "ALL",
 ]
-lint.ignore = [
+ignore = [
   "COM812", # missing-trailing-comma
   "DJ",     # flake8-django
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
 ]
-lint.per-file-ignores."noxfile.py" = [
+per-file-ignores."noxfile.py" = [
   "ANN",
 ]
-lint.per-file-ignores."tests/*" = [
+per-file-ignores."tests/*" = [
   "ANN201", # missing-return-type-public-function
   "S101",   # assert
   "SLF001", # private-member-access
 ]
-lint.unfixable = [
+unfixable = [
   "ERA001", # commented-out-code
 ]
-lint.flake8-annotations.allow-star-arg-any = true
-lint.isort.known-first-party = [
+flake8-annotations.allow-star-arg-any = true
+isort.known-first-party = [
   "tap_readthedocs",
 ]
-lint.isort.required-imports = [
+isort.required-imports = [
   "from __future__ import annotations",
 ]
-lint.pydocstyle.convention = "google"
+pydocstyle.convention = "google"
 
 [tool.deptry]
-package_module_name_map.mypy = "mypy"
-package_module_name_map.types-requests = "requests"
+[tool.deptry.package_module_name_map]
+mypy = "mypy"
+types-requests = "requests"
 
 [tool.pyproject-fmt]
-max_supported_python = "3.14"
+table_format = "long"
 
 [tool.pytest]
 addopts = [
-  "-vvv",
+  "-v",
   "-ra",
-  "--strict-config",
-  "--strict-markers",
 ]
 filterwarnings = [
   "error",
@@ -126,7 +132,7 @@ filterwarnings = [
 log_level = "INFO"
 minversion = "9"
 testpaths = [ "tests" ]
-xfail_strict = true
+strict = true
 
 [tool.tox]
 min_version = "4.22"
@@ -138,18 +144,21 @@ env_list = [
   "3.13",
   "3.12",
 ]
-env.dependencies.dependency_groups = [ "testing" ]
-env.dependencies.commands = [ [ "deptry", "." ] ]
-env.sync.commands = [ [ "tap-readthedocs", { replace = "posargs", default = [ "--config=ENV" ], extend = true } ] ]
-env.typing.dependency_groups = [ "testing", "typing" ]
-env.typing.commands = [
-  [ "mypy", "--strict", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
+[tool.tox.env]
+dependencies.dependency_groups = [ "testing" ]
+dependencies.commands = [ [ "deptry", "." ] ]
+sync.commands = [ [ "tap-readthedocs", { replace = "posargs", default = [ "--config=ENV" ], extend = true } ] ]
+typing.dependency_groups = [ "testing", "typing" ]
+typing.commands = [
+  [ "mypy", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
   [ "ty", "check", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
 ]
-env_run_base.runner = "uv-venv-lock-runner"
-env_run_base.pass_env = [ "TAP_READTHEDOCS_*" ]
-env_run_base.dependency_groups = [ "testing" ]
-env_run_base.commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+pass_env = [ "TAP_READTHEDOCS_*" ]
+dependency_groups = [ "testing" ]
+commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
 
 [tool.mypy]
 enable_error_code = [

@@ -11,7 +11,7 @@ on:
       - tests/**
       - pyproject.toml
       - uv.lock
-      - .github/workflows/test.yml
+      - .github/workflows/test.yaml
   pull_request:
     branches: [main]
     paths:
@@ -19,7 +19,7 @@ on:
       - tests/**
       - pyproject.toml
       - uv.lock
-      - .github/workflows/test.yml
+      - .github/workflows/test.yaml
   workflow_dispatch:
   schedule:
   # Every 4 days at 12:00 UTC
@@ -40,10 +40,11 @@ env:
 
 jobs:
   tests:
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         python-version:
         - "3.14"
@@ -52,17 +53,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-    - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-      id: setup-python
-      with:
-        python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
     - uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7.3.1
       with:
+        python-version: ${{ matrix.python-version }}
         version: ${{ env.UV_VERSION }}
     - name: Run
       env:
-        UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
         TAP_READTHEDOCS_TOKEN: ${{ secrets.TAP_READTHEDOCS_TOKEN }}
       run: >
         uvx
@@ -71,17 +67,21 @@ jobs:
         tox -e ${{ matrix.python-version }}
 
   lint:
+    name: Lint
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-    - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-      id: setup-python
     - uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7.3.1
       with:
         version: ${{ env.UV_VERSION }}
     - env:
         UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
-      run: uv tool install --with tox-uv==${{ env.TOX_UV_VERSION }} --from tox==${{ env.TOX_VERSION }} tox
+      run: >
+        uv tool install
+        --managed-python
+        --with tox-uv==${{ env.TOX_UV_VERSION }}
+        --from tox==${{ env.TOX_VERSION }}
+        tox
     - name: Static type checking
       run: tox -e typing
     - name: Unused, missing and transitive dependencies

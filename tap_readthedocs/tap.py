@@ -33,7 +33,7 @@ class TapReadTheDocs(Tap):
 
     @override
     def discover_streams(self) -> list[ReadTheDocsStream]:
-        result = [
+        result: list[ReadTheDocsStream] = [
             streams.Builds(tap=self),
             streams.Projects(tap=self),
             streams.Redirects(tap=self),
