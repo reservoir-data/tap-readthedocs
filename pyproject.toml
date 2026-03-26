@@ -29,7 +29,7 @@ dynamic = [
 ]
 dependencies = [
   "requests-cache~=1.0",
-  "singer-sdk~=0.54.0a4",
+  "singer-sdk~=0.54.0a8",
   "toolz~=1.1.0",
 ]
 [[project.authors]]
@@ -70,7 +70,6 @@ source = "vcs"
 [tool.uv]
 required-version = ">=0.10"
 prerelease = "allow"
-preview = true
 
 [tool.ruff]
 line-length = 88
@@ -84,9 +83,6 @@ ignore = [
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
 ]
-per-file-ignores."noxfile.py" = [
-  "ANN",
-]
 per-file-ignores."tests/*" = [
   "ANN201", # missing-return-type-public-function
   "S101",   # assert
@@ -96,12 +92,6 @@ unfixable = [
   "ERA001", # commented-out-code
 ]
 flake8-annotations.allow-star-arg-any = true
-isort.known-first-party = [
-  "tap_readthedocs",
-]
-isort.required-imports = [
-  "from __future__ import annotations",
-]
 pydocstyle.convention = "google"
 
 [tool.deptry]
