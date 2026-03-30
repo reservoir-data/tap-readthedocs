@@ -135,7 +135,7 @@ strict = true
 testpaths = [ "tests" ]
 
 [tool.tox]
-requires = [ "tox>=4.43", "tox-uv" ]
+requires = [ "tox>=4.51", "tox-uv" ]
 env_list = [
   "dependencies",
   "typing",
@@ -148,7 +148,7 @@ labels = [ "check" ]
 commands = [ [ "deptry", "." ] ]
 [tool.tox.env.test]
 description = "run tests on Python {py_dot_ver}"
-base_python = "3.14"  # TODO: Use .python-version (https://github.com/tox-dev/tox/issues/3894)
+base_python_python = [ ".python-version" ]
 [tool.tox.env.typing]
 description = "type checks"
 dependency_groups = [ "testing", "typing" ]
