@@ -70,13 +70,12 @@ source = "vcs"
 [tool.uv]
 required-version = ">=0.10"
 prerelease = "allow"
+preview = true
 
 [tool.ruff]
 line-length = 88
 [tool.ruff.lint]
-select = [
-  "ALL",
-]
+select = [ "ALL" ]
 ignore = [
   "COM812", # missing-trailing-comma
   "DJ",     # flake8-django
@@ -91,12 +90,12 @@ per-file-ignores."tests/*" = [
 unfixable = [
   "ERA001", # commented-out-code
 ]
-flake8-annotations.allow-star-arg-any = true
 pydocstyle.convention = "google"
 
-[tool.deptry]
 [tool.deptry.package_module_name_map]
 mypy = "mypy"
+toolz-stubs = "toolz"
+ty = "ty"
 types-requests = "requests"
 
 [tool.pyproject-fmt]
@@ -110,6 +109,8 @@ enable_error_code = [
 ]
 strict = true
 warn_redundant_casts = true
+warn_return_any = true
+warn_no_return = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
@@ -147,7 +148,6 @@ dependency_groups = [ "testing" ]
 labels = [ "check" ]
 commands = [ [ "deptry", "." ] ]
 [tool.tox.env.test]
-description = "run tests on Python {py_dot_ver}"
 base_python_python = [ ".python-version" ]
 [tool.tox.env.typing]
 description = "type checks"
@@ -159,6 +159,7 @@ commands = [
 ]
 
 [tool.tox.env_run_base]
+description = "run tests on Python {py_dot_ver}"
 runner = "uv-venv-lock-runner"
 pass_env = [ "TAP_READTHEDOCS_*" ]
 dependency_groups = [ "testing" ]
