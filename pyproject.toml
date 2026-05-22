@@ -59,7 +59,6 @@ typing = [
   "mypy",
   "toolz-stubs>=0.4",
   "ty>=0.0.23",
-  "types-requests",
 ]
 
 [tool.hatch.metadata.hooks.pinned_extra]
@@ -96,7 +95,6 @@ pydocstyle.convention = "google"
 mypy = "mypy"
 toolz-stubs = "toolz"
 ty = "ty"
-types-requests = "requests"
 
 [tool.pyproject-fmt]
 table_format = "long"
