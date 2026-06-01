@@ -100,18 +100,18 @@ ty = "ty"
 table_format = "long"
 
 [tool.mypy]
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_return_any = true
+warn_unreachable = true
 enable_error_code = [
   "ignore-without-code",
   "redundant-expr",
   "truthy-bool",
 ]
 strict = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_no_return = true
-warn_unreachable = true
 warn_unused_configs = true
-warn_unused_ignores = true
 
 [tool.pytest]
 addopts = [
@@ -137,28 +137,28 @@ testpaths = [ "tests" ]
 requires = [ "tox>=4.51", "tox-uv" ]
 env_list = [
   "dependencies",
-  "typing",
   "test",
+  "typing",
 ]
 [tool.tox.env.dependencies]
 description = "check for unused, missing and transitive dependencies"
 dependency_groups = [ "testing" ]
-labels = [ "check" ]
 commands = [ [ "deptry", "." ] ]
+labels = [ "check" ]
 [tool.tox.env.test]
 base_python_python = [ ".python-version" ]
 [tool.tox.env.typing]
 description = "type checks"
 dependency_groups = [ "testing", "typing" ]
-labels = [ "check" ]
 commands = [
   [ "mypy", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
   [ "ty", "check", { replace = "posargs", default = [ "tap_readthedocs", "tests" ], extend = true } ],
 ]
+labels = [ "check" ]
 
 [tool.tox.env_run_base]
-description = "run tests on Python {py_dot_ver}"
 runner = "uv-venv-lock-runner"
-pass_env = [ "TAP_READTHEDOCS_*" ]
+description = "run tests on Python {py_dot_ver}"
 dependency_groups = [ "testing" ]
+pass_env = [ "TAP_READTHEDOCS_*" ]
 commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
