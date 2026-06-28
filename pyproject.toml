@@ -1,9 +1,9 @@
 [build-system]
 build-backend = "hatchling.build"
 requires = [
-  "hatch-pinned-extra==0.3",
+  "hatch-pinned-extra==0.4",
   "hatch-vcs==0.5",
-  "hatchling==1.29",
+  "hatchling==1.30.1",
 ]
 
 [project]
@@ -29,7 +29,7 @@ dynamic = [
 ]
 dependencies = [
   "requests-cache~=1.0",
-  "singer-sdk~=0.54.0a8",
+  "singer-sdk~=0.54.5",
   "toolz~=1.1.0",
 ]
 [[project.authors]]
@@ -47,23 +47,24 @@ Source = "https://github.com/reservoir-data/tap-readthedocs"
 
 [dependency-groups]
 dev = [
+  "deptry>=0.25",
   { include-group = "testing" },
   { include-group = "typing" },
 ]
 testing = [
-  "deptry>=0.12",
   "pytest>=9",
   "singer-sdk[testing]",
 ]
 typing = [
-  "mypy",
+  "mypy>=2.1",
   "toolz-stubs>=0.4",
-  "ty>=0.0.23",
+  "ty>=0.0.50",
 ]
 
 [tool.hatch.metadata.hooks.pinned_extra]
 name = "pinned"
 [tool.hatch.version]
+fallback-version = "0.0.0.dev0"
 source = "vcs"
 
 [tool.uv]
@@ -90,11 +91,6 @@ unfixable = [
   "ERA001", # commented-out-code
 ]
 pydocstyle.convention = "google"
-
-[tool.deptry.package_module_name_map]
-mypy = "mypy"
-toolz-stubs = "toolz"
-ty = "ty"
 
 [tool.pyproject-fmt]
 table_format = "long"
@@ -142,7 +138,7 @@ env_list = [
 ]
 [tool.tox.env.dependencies]
 description = "check for unused, missing and transitive dependencies"
-dependency_groups = [ "testing" ]
+dependency_groups = [ "dev" ]
 commands = [ [ "deptry", "." ] ]
 labels = [ "check" ]
 [tool.tox.env.test]
