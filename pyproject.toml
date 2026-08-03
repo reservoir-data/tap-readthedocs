@@ -81,6 +81,7 @@ ignore = [
   "DJ",     # flake8-django
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
+  "CPY001", # missing-copyright-notice
 ]
 per-file-ignores."tests/*" = [
   "ANN201", # missing-return-type-public-function
