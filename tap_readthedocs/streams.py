@@ -196,13 +196,93 @@ class Subprojects(ReadTheDocsStream):
 
     name = "subprojects"
     path = "/api/v3/projects/{project_slug}/subprojects"
-    primary_keys = ("id",)
+    primary_keys = ("alias",)
     parent_stream_type = Projects
 
-    # TODO(edgarrmondragon): get the complete schema
-    # https://github.com/reservoir-data/tap-readthedocs/issues/2
     schema = th.PropertiesList(
-        th.Property("id", th.StringType),
+        th.Property("alias", th.StringType),
+        th.Property(
+            "child",
+            th.ObjectType(
+                th.Property("id", th.IntegerType),
+                th.Property("name", th.StringType),
+                th.Property("slug", th.StringType),
+                th.Property("created", th.DateTimeType),
+                th.Property("modified", th.DateTimeType),
+                th.Property(
+                    "language",
+                    th.ObjectType(
+                        th.Property("code", th.StringType),
+                        th.Property("name", th.StringType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "programming_language",
+                    th.ObjectType(
+                        th.Property("code", th.StringType),
+                        th.Property("name", th.StringType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "repository",
+                    th.ObjectType(
+                        th.Property("url", th.StringType),
+                        th.Property("type", th.StringType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property("default_version", th.StringType),
+                th.Property("default_branch", th.StringType),
+                th.Property(
+                    "translation_of",
+                    th.ObjectType(
+                        th.Property("slug", th.StringType),
+                        th.Property(
+                            "_links", th.ObjectType(additional_properties=True)
+                        ),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "urls",
+                    th.ObjectType(
+                        th.Property("documentation", th.StringType),
+                        th.Property("home", th.StringType),
+                        th.Property("builds", th.StringType),
+                        th.Property("versions", th.StringType),
+                        th.Property("downloads", th.StringType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property("tags", th.ArrayType(th.StringType)),
+                th.Property(
+                    "users",
+                    th.ArrayType(
+                        th.ObjectType(
+                            th.Property("username", th.StringType),
+                        ),
+                    ),
+                ),
+                th.Property("homepage", th.StringType),
+                th.Property("external_builds_privacy_level", th.StringType),
+                th.Property("privacy_level", th.StringType),
+                th.Property("single_version", th.BooleanType),
+                th.Property("versioning_scheme", th.StringType),
+                th.Property("readthedocs_yaml_path", th.StringType),
+                th.Property("_links", th.ObjectType(additional_properties=True)),
+                additional_properties=True,
+            ),
+        ),
+        th.Property(
+            "_links",
+            th.ObjectType(
+                th.Property("_self", th.StringType),
+                th.Property("parent", th.StringType),
+                additional_properties=True,
+            ),
+        ),
     ).to_dict()
 
 
@@ -214,10 +294,81 @@ class Translations(ReadTheDocsStream):
     primary_keys = ("id",)
     parent_stream_type = Projects
 
-    # TODO(edgarrmondragon): get the complete schema
-    # https://github.com/reservoir-data/tap-readthedocs/issues/2
     schema = th.PropertiesList(
-        th.Property("id", th.StringType),
+        th.Property("id", th.IntegerType),
+        th.Property("name", th.StringType),
+        th.Property("slug", th.StringType),
+        th.Property("created", th.DateTimeType),
+        th.Property("modified", th.DateTimeType),
+        th.Property(
+            "language",
+            th.ObjectType(
+                th.Property("code", th.StringType),
+                th.Property("name", th.StringType),
+                additional_properties=True,
+            ),
+        ),
+        th.Property(
+            "programming_language",
+            th.ObjectType(
+                th.Property("code", th.StringType),
+                th.Property("name", th.StringType),
+                additional_properties=True,
+            ),
+        ),
+        th.Property(
+            "repository",
+            th.ObjectType(
+                th.Property("url", th.StringType),
+                th.Property("type", th.StringType),
+                additional_properties=True,
+            ),
+        ),
+        th.Property("default_version", th.StringType),
+        th.Property("default_branch", th.StringType),
+        th.Property(
+            "subproject_of",
+            th.ObjectType(
+                th.Property("slug", th.StringType),
+                th.Property("_links", th.ObjectType(additional_properties=True)),
+                additional_properties=True,
+            ),
+        ),
+        th.Property(
+            "translation_of",
+            th.ObjectType(
+                th.Property("slug", th.StringType),
+                th.Property("_links", th.ObjectType(additional_properties=True)),
+                additional_properties=True,
+            ),
+        ),
+        th.Property(
+            "urls",
+            th.ObjectType(
+                th.Property("documentation", th.StringType),
+                th.Property("home", th.StringType),
+                th.Property("builds", th.StringType),
+                th.Property("versions", th.StringType),
+                th.Property("downloads", th.StringType),
+                additional_properties=True,
+            ),
+        ),
+        th.Property("tags", th.ArrayType(th.StringType)),
+        th.Property(
+            "users",
+            th.ArrayType(
+                th.ObjectType(
+                    th.Property("username", th.StringType),
+                ),
+            ),
+        ),
+        th.Property("homepage", th.StringType),
+        th.Property("external_builds_privacy_level", th.StringType),
+        th.Property("privacy_level", th.StringType),
+        th.Property("single_version", th.BooleanType),
+        th.Property("versioning_scheme", th.StringType),
+        th.Property("readthedocs_yaml_path", th.StringType),
+        th.Property("_links", th.ObjectType(additional_properties=True)),
     ).to_dict()
 
 
