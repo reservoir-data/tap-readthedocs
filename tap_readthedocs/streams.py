@@ -15,6 +15,11 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+# A value that is either a string or a list of strings.
+_STRING_OR_LIST = th.CustomType(
+    {"type": ["array", "string"], "items": {"type": ["string"]}},
+)
+
 
 class Projects(ReadTheDocsStream):
     """Projects stream."""
@@ -153,12 +158,128 @@ class Builds(ReadTheDocsStream):
             th.ObjectType(
                 th.Property("version", th.StringType),
                 th.Property("formats", th.ArrayType(th.StringType)),
-                # TODO(edgarrmondragon): add other configs here (sphinx, etc.)
-                # https://github.com/reservoir-data/tap-readthedocs/issues/227
+                th.Property("doctype", th.StringType),
+                th.Property(
+                    "conda",
+                    th.ObjectType(
+                        th.Property("environment", th.StringType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "build",
+                    th.ObjectType(
+                        # Legacy (config version 1) field.
+                        th.Property("image", th.StringType),
+                        th.Property("os", th.StringType),
+                        th.Property("apt_packages", th.ArrayType(th.StringType)),
+                        th.Property("commands", th.ArrayType(th.StringType)),
+                        th.Property(
+                            "tools",
+                            th.ObjectType(
+                                th.Property(
+                                    "python",
+                                    th.ObjectType(
+                                        th.Property("version", th.StringType),
+                                        th.Property("full_version", th.StringType),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                th.Property(
+                                    "nodejs",
+                                    th.ObjectType(
+                                        th.Property("version", th.StringType),
+                                        th.Property("full_version", th.StringType),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                th.Property(
+                                    "ruby",
+                                    th.ObjectType(
+                                        th.Property("version", th.StringType),
+                                        th.Property("full_version", th.StringType),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                th.Property(
+                                    "rust",
+                                    th.ObjectType(
+                                        th.Property("version", th.StringType),
+                                        th.Property("full_version", th.StringType),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                th.Property(
+                                    "golang",
+                                    th.ObjectType(
+                                        th.Property("version", th.StringType),
+                                        th.Property("full_version", th.StringType),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                additional_properties=True,
+                            ),
+                        ),
+                        th.Property(
+                            "jobs",
+                            th.ObjectType(
+                                th.Property(
+                                    "pre_checkout",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "post_checkout",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "pre_system_dependencies",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "post_system_dependencies",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "pre_create_environment",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "create_environment",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property(
+                                    "post_create_environment",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property("pre_install", th.ArrayType(th.StringType)),
+                                th.Property("install", th.ArrayType(th.StringType)),
+                                th.Property(
+                                    "post_install",
+                                    th.ArrayType(th.StringType),
+                                ),
+                                th.Property("pre_build", th.ArrayType(th.StringType)),
+                                th.Property(
+                                    "build",
+                                    th.ObjectType(
+                                        th.Property("html", _STRING_OR_LIST),
+                                        th.Property("htmlzip", _STRING_OR_LIST),
+                                        th.Property("pdf", _STRING_OR_LIST),
+                                        th.Property("epub", _STRING_OR_LIST),
+                                        additional_properties=True,
+                                    ),
+                                ),
+                                th.Property("post_build", th.ArrayType(th.StringType)),
+                                additional_properties=True,
+                            ),
+                        ),
+                        additional_properties=True,
+                    ),
+                ),
                 th.Property(
                     "python",
                     th.ObjectType(
                         th.Property("version", th.StringType),
+                        th.Property("use_system_site_packages", th.BooleanType),
                         th.Property(
                             "install",
                             th.ArrayType(
@@ -170,12 +291,55 @@ class Builds(ReadTheDocsStream):
                                         "extra_requirements",
                                         th.ArrayType(th.StringType),
                                     ),
+                                    # uv-specific fields.
+                                    th.Property("command", th.StringType),
+                                    th.Property("groups", _STRING_OR_LIST),
+                                    th.Property("extras", _STRING_OR_LIST),
+                                    additional_properties=True,
                                 ),
                             ),
                         ),
-                        th.Property("system_packages", th.BooleanType),
+                        additional_properties=True,
                     ),
                 ),
+                th.Property(
+                    "sphinx",
+                    th.ObjectType(
+                        th.Property("builder", th.StringType),
+                        th.Property("configuration", th.StringType),
+                        th.Property("fail_on_warning", th.BooleanType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "mkdocs",
+                    th.ObjectType(
+                        th.Property("configuration", th.StringType),
+                        th.Property("fail_on_warning", th.BooleanType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "submodules",
+                    th.ObjectType(
+                        th.Property("include", _STRING_OR_LIST),
+                        th.Property("exclude", _STRING_OR_LIST),
+                        th.Property("recursive", th.BooleanType),
+                        additional_properties=True,
+                    ),
+                ),
+                th.Property(
+                    "search",
+                    th.ObjectType(
+                        th.Property(
+                            "ranking",
+                            th.ObjectType(additional_properties=True),
+                        ),
+                        th.Property("ignore", th.ArrayType(th.StringType)),
+                        additional_properties=True,
+                    ),
+                ),
+                additional_properties=True,
             ),
         ),
     ).to_dict()
