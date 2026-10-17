@@ -30,7 +30,7 @@ dynamic = [
 dependencies = [
   "requests-cache~=1.0",
   "singer-sdk~=0.55.0a1",
-  "toolz~=1.1.0",
+  "toolz~=1.2.0",
 ]
 [[project.maintainers]]
 name = "Edgar Ramírez-Mondragón"
