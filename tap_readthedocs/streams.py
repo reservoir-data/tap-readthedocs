@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 from typing import TYPE_CHECKING, Any, override
 
 from singer_sdk import typing as th
@@ -11,6 +12,8 @@ from toolz.dicttoolz import update_in
 from tap_readthedocs.client import ReadTheDocsStream
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from singer_sdk.helpers.types import Context
 
 logger = logging.getLogger(__name__)
@@ -133,6 +136,12 @@ class Builds(ReadTheDocsStream):
     path = "/api/v3/projects/{project_slug}/builds"
     primary_keys = ("id",)
     parent_stream_type = Projects
+
+    # The API has no server-side filter (readthedocs/readthedocs.org#8971), but it
+    # returns builds sorted by `created` descending, so the filtering is done here:
+    # records are consumed until the bookmark is reached.
+    # `is_sorted` is intentionally unset, as the SDK expects ascending order.
+    replication_key = "created"
 
     schema = th.PropertiesList(
         th.Property("id", th.IntegerType),
@@ -343,6 +352,18 @@ class Builds(ReadTheDocsStream):
             ),
         ),
     ).to_dict()
+
+    @override
+    def request_records(self, context: Context | None) -> Iterable[dict[str, Any]]:
+        cutoff = self.get_starting_timestamp(context)
+        for record in super().request_records(context):
+            # Records at the bookmark are kept, so builds created at the exact same
+            # timestamp aren't missed. Duplicates are handled by the primary key.
+            if cutoff and datetime.fromisoformat(record["created"]) < cutoff:
+                # Results are sorted descending, so everything after this is older
+                # too. Stopping here means the SDK never requests the next page.
+                return
+            yield record
 
     @override
     def post_process(
