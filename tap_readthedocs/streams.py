@@ -372,7 +372,7 @@ class Builds(ReadTheDocsStream):
         context: Context | None = None,
     ) -> dict[str, Any] | None:
         if row["config"]:
-            row = update_in(row, ["config", "python", "version"], str, "")  # ty:ignore[no-matching-overload]
+            row = update_in(row, ["config", "python", "version"], str, "")
         return row
 
 
