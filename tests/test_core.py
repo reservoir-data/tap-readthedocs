@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Any
+import datetime as dt
 
 from singer_sdk.testing import SuiteConfig, get_tap_test_class
 
 from tap_readthedocs.tap import TapReadTheDocs
 
-SAMPLE_CONFIG: dict[str, Any] = {}
-
-
 TestTapReadTheDocs = get_tap_test_class(
     TapReadTheDocs,
-    config=SAMPLE_CONFIG,
+    config={
+        "start_date": (dt.datetime.now(tz=dt.UTC) - dt.timedelta(days=7)).isoformat(),
+    },
     suite_config=SuiteConfig(
         max_records_limit=10,
         ignore_no_records_for_streams=[
