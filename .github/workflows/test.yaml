@@ -19,13 +19,13 @@ concurrency:
 env:
   FORCE_COLOR: 1
   # renovate: datasource=pypi depName=prek
-  PREK_VERSION: 0.5.11
+  PREK_VERSION: ~=0.5.11
   # renovate: datasource=pypi depName=uv
-  UV_VERSION: 0.13.9
+  UV_VERSION: ~=0.13.9
   # renovate: datasource=pypi depName=tox
-  TOX_VERSION: 4.67.15
+  TOX_VERSION: ~=4.67.15
   # renovate: datasource=pypi depName=tox-uv
-  TOX_UV_VERSION: 1.37.9
+  TOX_UV_VERSION: ~=1.37.9
 
 jobs:
   files-changed:
@@ -86,8 +86,8 @@ jobs:
         MATRIX_PYTHON_VERSION: ${{ matrix.python-version }}
       run: >
         uvx
-        --with tox-uv=="${TOX_UV_VERSION}"
-        --with tox=="${TOX_VERSION}"
+        --with "tox-uv${TOX_UV_VERSION}"
+        --with "tox${TOX_VERSION}"
         tox -e "${MATRIX_PYTHON_VERSION}"
 
   static:
@@ -104,8 +104,8 @@ jobs:
       run: >
         uv tool install
         --managed-python
-        --with tox-uv=="${TOX_UV_VERSION}"
-        --from tox=="${TOX_VERSION}"
+        --with "tox-uv${TOX_UV_VERSION}"
+        --from "tox${TOX_VERSION}"
         tox
     - name: Static Analysis
       run: tox -m check
@@ -122,7 +122,7 @@ jobs:
         version: ${{ env.UV_VERSION }}
     - run: >
         uvx
-        --with prek=="${PREK_VERSION}"
+        --with "prek${PREK_VERSION}"
         prek run --show-diff-on-failure --all-files
 
   ci:
